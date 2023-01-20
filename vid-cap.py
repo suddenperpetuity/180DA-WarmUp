@@ -1,4 +1,4 @@
-
+# started with code from https://docs.opencv.org/4.x/df/d9d/tutorial_py_colorspaces.html
 
 import cv2 as cv
 import numpy as np
@@ -9,7 +9,7 @@ while True:
     # Convert BGR to HSV
     hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
 
-    # https://cvexplained.wordpress.com/2020/04/28/color-detection-hsv/
+    # color processing code from https://cvexplained.wordpress.com/2020/04/28/color-detection-hsv/
     # lower boundary RED color range values; Hue (0 - 10)
     lower1 = np.array([0, 150, 20])
     upper1 = np.array([10, 255, 255])
@@ -25,13 +25,12 @@ while True:
     _, thresh = cv.threshold(mask, 127, 255, 0)
     contours, _ = cv.findContours(thresh, 1, 2)
 
-    # bounding rect
-
-    for contour in contours:
-        (x, y, w, h) = cv.boundingRect(contour)
-        contour_area = cv.contourArea(contour)
+    # bounding rect code from https://docs.opencv.org/4.x/dd/d49/tutorial_py_contour_features.html
+    for c in contours:
+        (x, y, w, h) = cv.boundingRect(c)
+        c_area = cv.contourArea(c)
         # print(contour_area)
-        if contour_area < 10000:
+        if c_area < 10000:
             continue
         cv.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
